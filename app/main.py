@@ -6,14 +6,16 @@ def main():
         sys.stdout.write("$ ")
         # Wait for user input
         command = input().strip()
+        
         if not command:
             continue
 
-        if command.startswith("exit"):
+        if command == "exit":
             sys.exit(0)
         else:
             # Prints the "<command>: command not found" message
-            print(f"{command.split()[0]}: command not found")
+            print(f"{command}: command not found")
 
 if __name__ == "__main__":
     main()
+
