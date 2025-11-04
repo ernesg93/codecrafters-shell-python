@@ -27,6 +27,12 @@ def main() -> NoReturn:
             # Handle exit command
             if command == "exit" or command == "exit 0":
                 sys.exit(0)
+            
+            # Handle echo command
+            elif command.startswith("echo "):
+                # Extract everything after "echo "
+                print(command[5:])  # Remove "echo " from the beginning
+            
             else:
                 # Print the "<command>: command not found" message
                 print(f"{command}: command not found")
