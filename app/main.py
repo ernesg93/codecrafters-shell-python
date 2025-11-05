@@ -12,6 +12,9 @@ def main() -> NoReturn:
     Continuously reads commands from user input and executes them.
     The shell terminates when the 'exit' command is received.
     """
+    # Define the builtin commands
+    builtins = {"exit", "echo", "type"}
+
     while True:
         try:
             # Display prompt
@@ -23,15 +26,33 @@ def main() -> NoReturn:
             # Skip empty commands
             if not command:
                 continue
+            
+            # Split command into parts
+            parts: list[str] = command.split()
+            command_name: str = parts[0]
 
             # Handle exit command
-            if command == "exit" or command == "exit 0":
+            if command_name == "exit":
                 sys.exit(0)
             
             # Handle echo command
-            elif command.startswith("echo "):
-                # Extract everything after "echo "
-                print(command[5:])  # Remove "echo " from the beginning
+            elif command_name == "echo":
+                # Join all arguments with spaces
+                text_to_echo: str = " ".join(parts[1:])
+                print(text_to_echo)
+            
+            # Handle type command
+            elif command_name == "type":
+                if len(parts) < 2:
+                    print("type: missing argument")
+                    continue
+                
+                command_to_check: str = parts[1]
+                
+                if command_to_check in builtins:
+                    print(f"{command_to_check} is a shell builtin")
+                else:
+                    print(f"{command_to_check}: not found")
             
             else:
                 # Print the "<command>: command not found" message
