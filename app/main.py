@@ -1,10 +1,9 @@
-
 """A simple shell implementation with exit, echo and type command support."""
 
 import sys
 import os
-import stat
-from typing import NoReturn
+import subprocess
+from typing import NoReturn, List
 
 
 def main() -> NoReturn:
@@ -16,7 +15,7 @@ def main() -> NoReturn:
     """
     # Define the builtin commands
     builtins = {"exit", "echo", "type"}
-
+    
     while True:
         try:
             # Display prompt
@@ -32,7 +31,7 @@ def main() -> NoReturn:
             # Split command into parts
             parts: list[str] = command.split()
             command_name: str = parts[0]
-
+            
             # Handle exit command
             if command_name == "exit":
                 sys.exit(0)
@@ -83,9 +82,35 @@ def main() -> NoReturn:
                     if not found_executable:
                         print(f"{command_to_check}: not found")
             
+            # Handle external commands
             else:
-                # Print the "<command>: command not found" message
-                print(f"{command}: command not found")
+                # Search for executable in PATH
+                executable_path: str | None = None
+                
+                # Get PATH from environment
+                path_dirs: str = os.environ.get("PATH", "")
+                directories: list[str] = path_dirs.split(os.pathsep) if path_dirs else []
+                
+                for directory in directories:
+                    if not directory:
+                        continue
+                    
+                    full_path: str = os.path.join(directory, command_name)
+                    if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
+                        executable_path = full_path
+                        break
+                
+                if executable_path:
+                    # Execute the external program with arguments
+                    try:
+                        # Use subprocess to run the external command
+                        # parts[0] is the command name, parts[1:] are the arguments
+                        subprocess.run([executable_path] + parts[1:])
+                    except Exception as e:
+                        print(f"Error executing command: {e}", file=sys.stderr)
+                else:
+                    # Command not found
+                    print(f"{command_name}: command not found")
                 
         except EOFError:
             # Handle Ctrl+D - exit gracefully
