@@ -105,7 +105,7 @@ def main() -> NoReturn:
                     try:
                         # Use subprocess to run the external command
                         # parts[0] is the command name, parts[1:] are the arguments
-                        subprocess.run([executable_path] + parts[1:])
+                        subprocess.run([command_name] + parts[1:])
                     except Exception as e:
                         print(f"Error executing command: {e}", file=sys.stderr)
                 else:
