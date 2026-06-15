@@ -1,4 +1,4 @@
-[![progress-banner](https://backend.codecrafters.io/progress/shell/aeeef3fb-eda8-434c-9b5f-ce5e683fa061)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
+[![progress-banner](https://backend.codecrafters.io/progress/shell/fd21f016-2560-4cbf-86b4-fae96b1df091)](https://app.codecrafters.io/users/ernesg93?r=2qF)
 
 This is a starting point for Python solutions to the
 ["Build Your Own Shell" Challenge](https://app.codecrafters.io/courses/shell/overview).
@@ -14,11 +14,11 @@ REPLs, builtin commands, and more.
 # Passing the first stage
 
 The entry point for your `shell` implementation is in `app/main.py`. Study and
-uncomment the relevant code, and push your changes to pass the first stage:
+uncomment the relevant code, then run the command below to execute the tests on
+our servers:
 
 ```sh
-git commit -am "pass 1st stage" # any msg
-git push origin master
+codecrafters submit
 ```
 
 Time to move on to the next stage!
@@ -27,8 +27,8 @@ Time to move on to the next stage!
 
 Note: This section is for stages 2 and beyond.
 
-1. Ensure you have `python (3.13)` installed locally
+1. Ensure you have `uv` installed locally
 1. Run `./your_program.sh` to run your program, which is implemented in
    `app/main.py`.
-1. Commit your changes and run `git push origin master` to submit your solution
-   to CodeCrafters. Test output will be streamed to your terminal.
+1. Run `codecrafters submit` to submit your solution to CodeCrafters. Test
+   output will be streamed to your terminal.
