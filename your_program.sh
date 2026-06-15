@@ -12,4 +12,9 @@ set -e # Exit early if any commands fail
 #
 # - Edit this to change how your program runs locally
 # - Edit .codecrafters/run.sh to change how your program runs remotely
-exec pipenv run python3 -u -m app.main "$@"
+SCRIPT_DIR="$(dirname "$0")"
+PYTHONSAFEPATH=1 PYTHONPATH="$SCRIPT_DIR" exec uv run \
+  --project "$SCRIPT_DIR" \
+  --quiet \
+  -m app.main \
+  "$@"
