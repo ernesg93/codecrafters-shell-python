@@ -1,4 +1,4 @@
-"""A simple shell implementation with exit, echo and type command support."""
+"""A simple shell implementation with exit, echo, type and external command support."""
 
 import sys
 import os
@@ -15,7 +15,7 @@ def main() -> NoReturn:
     """
     # Define the builtin commands
     builtins = {"exit", "echo", "type"}
-    
+
     while True:
         try:
             # Display prompt
@@ -29,9 +29,9 @@ def main() -> NoReturn:
                 continue
             
             # Split command into parts
-            parts: list[str] = command.split()
+            parts: List[str] = command.split()
             command_name: str = parts[0]
-            
+
             # Handle exit command
             if command_name == "exit":
                 sys.exit(0)
@@ -62,7 +62,7 @@ def main() -> NoReturn:
                     path_dirs: str = os.environ.get("PATH", "")
                     
                     # Split PATH using OS-agnostic separator
-                    directories: list[str] = path_dirs.split(os.pathsep) if path_dirs else []
+                    directories: List[str] = path_dirs.split(os.pathsep) if path_dirs else []
                     
                     for directory in directories:
                         # Skip empty directories
@@ -89,7 +89,7 @@ def main() -> NoReturn:
                 
                 # Get PATH from environment
                 path_dirs: str = os.environ.get("PATH", "")
-                directories: list[str] = path_dirs.split(os.pathsep) if path_dirs else []
+                directories: List[str] = path_dirs.split(os.pathsep) if path_dirs else []
                 
                 for directory in directories:
                     if not directory:
@@ -105,7 +105,7 @@ def main() -> NoReturn:
                     try:
                         # Use subprocess to run the external command
                         # parts[0] is the command name, parts[1:] are the arguments
-                        subprocess.run([command_name] + parts[1:])
+                        subprocess.run([executable_path] + parts[1:])
                     except Exception as e:
                         print(f"Error executing command: {e}", file=sys.stderr)
                 else:
